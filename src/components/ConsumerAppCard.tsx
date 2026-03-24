@@ -30,7 +30,7 @@ const ConsumerAppCard = ({ title, description, tags, plays, favorites, imageUrl,
     >
       {/* Background image */}
       <div className="absolute inset-0">
-        <img src={imageUrl} alt="" className="w-full h-full object-cover" />
+        <img src={imageUrl} alt={title} className="w-full h-full object-cover" />
       </div>
 
       {/* Translucent overlay */}
@@ -40,18 +40,18 @@ const ConsumerAppCard = ({ title, description, tags, plays, favorites, imageUrl,
       <div className="relative p-4 pt-20 flex flex-col gap-2">
         {/* External link icon */}
         <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-          <ExternalLink className="w-4 h-4 text-consumer-surface/80" />
+          <ExternalLink className="w-5 h-5 text-consumer-surface/80" />
         </div>
 
-        <h3 className="font-playful text-lg font-bold text-consumer-surface leading-tight">{title}</h3>
-        <p className="text-consumer-surface/70 text-xs leading-relaxed line-clamp-2">{description}</p>
+        <h3 className="font-playful text-xl font-bold text-consumer-surface leading-tight">{title}</h3>
+        <p className="text-consumer-surface/80 text-sm leading-relaxed line-clamp-2">{description}</p>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mt-1">
+        <div className="flex flex-wrap gap-2 mt-1.5">
           {tags.map((tag, i) => (
             <span
               key={tag}
-              className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${tagColors[i % tagColors.length]}`}
+              className={`text-xs font-semibold px-2.5 py-1 rounded-full ${tagColors[i % tagColors.length]}`}
             >
               {tag}
             </span>
@@ -59,13 +59,13 @@ const ConsumerAppCard = ({ title, description, tags, plays, favorites, imageUrl,
         </div>
 
         {/* Stats */}
-        <div className="flex items-center gap-3 mt-1 text-consumer-surface/60 text-xs">
-          <span className="flex items-center gap-1">
-            <Play className="w-3 h-3 fill-current" />
+        <div className="flex items-center gap-4 mt-1.5 text-consumer-surface/70 text-sm">
+          <span className="flex items-center gap-1.5">
+            <Play className="w-4 h-4 fill-current" />
             {formatCount(plays)}
           </span>
-          <span className="flex items-center gap-1">
-            <Heart className="w-3 h-3" />
+          <span className="flex items-center gap-1.5">
+            <Heart className="w-4 h-4" />
             {formatCount(favorites)}
           </span>
         </div>

@@ -59,6 +59,35 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  .business-shell {
+    --background: 222 47% 8%;
+    --foreground: 210 40% 96%;
+    --card: 222 35% 12%;
+    --card-foreground: 210 40% 96%;
+    --popover: 222 35% 12%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 210 100% 56%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 222 25% 16%;
+    --secondary-foreground: 215 20% 78%;
+    --muted: 222 24% 14%;
+    --muted-foreground: 215 20% 58%;
+    --accent: 42 78% 60%;
+    --accent-foreground: 222 47% 8%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 222 25% 18%;
+    --input: 222 25% 18%;
+    --ring: 210 100% 56%;
+    --coral: 12 90% 62%;
+    --success: 185 72% 52%;
+    --glow: 210 100% 56%;
+    --electric: 42 78% 60%;
+    --glass-bg: 222 35% 12% / 0.84;
+    --glass-border: 222 25% 24% / 0.72;
+    --bg-gradient: linear-gradient(160deg, hsl(222 47% 8%) 0%, hsl(222 35% 12%) 55%, hsl(210 100% 14%) 100%);
+  }
 }
 
 @layer base {
@@ -73,11 +102,40 @@
 }
 
 @layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
   .font-playful {
     font-family: 'Baloo 2', cursive;
   }
   .font-business {
     font-family: 'Space Grotesk', sans-serif;
+  }
+  .font-display {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .glass {
+    background: hsl(var(--glass-bg));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--glass-border));
+  }
+  .glow-primary {
+    box-shadow: 0 0 24px -4px hsl(var(--primary) / 0.35);
+  }
+  .glow-electric {
+    box-shadow: 0 0 24px -4px hsl(var(--electric) / 0.25);
+  }
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+  }
+  .bg-themed-gradient {
+    background: var(--bg-gradient);
   }
 }
 
@@ -94,6 +152,15 @@
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
+@keyframes shimmer-x {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes business-edge-flow {
+  0% { background-position: 0% 50%; opacity: 0.72; }
+  50% { opacity: 1; }
+  100% { background-position: 200% 50%; opacity: 0.72; }
+}
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 0 20px hsl(12 90% 62% / 0.2); }
   50% { box-shadow: 0 0 40px hsl(12 90% 62% / 0.4); }
@@ -109,6 +176,27 @@
   background: linear-gradient(90deg, transparent 0%, hsl(0 0% 100% / 0.08) 50%, transparent 100%);
   background-size: 200% 100%;
   animation: shimmer 3s ease-in-out infinite;
+}
+.animate-shimmer {
+  animation: shimmer-x 2s linear infinite;
+}
+.business-folder-edge {
+  position: absolute;
+  inset: 0 1.1rem auto 1.1rem;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    hsl(210 100% 56% / 0.14) 0%,
+    hsl(210 100% 56% / 0.75) 18%,
+    hsl(42 78% 60% / 0.58) 50%,
+    hsl(210 100% 56% / 0.72) 82%,
+    hsl(210 100% 56% / 0.14) 100%
+  );
+  background-size: 200% 100%;
+  box-shadow: 0 0 18px hsl(210 100% 56% / 0.14);
+  animation: business-edge-flow 8s ease-in-out infinite;
+  pointer-events: none;
 }
 
 /* Scrollbar styling */

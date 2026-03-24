@@ -1,18 +1,21 @@
 import { ArrowRight } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 interface BusinessAppCardProps {
   title: string;
   description: string;
   category: string;
-  icon: React.ReactNode;
+  icon: LucideIcon;
 }
 
 const BusinessAppCard = ({ title, description, category, icon }: BusinessAppCardProps) => {
+  const Icon = icon;
+
   return (
     <div className="group relative rounded-lg border border-business-border bg-business-surface/60 backdrop-blur-sm p-4 hover:border-business-accent/40 transition-all duration-300 cursor-pointer">
       <div className="flex items-start gap-3">
         <div className="shrink-0 w-10 h-10 rounded-lg bg-business-accent-soft flex items-center justify-center text-business-accent">
-          {icon}
+          <Icon className="w-5 h-5" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">

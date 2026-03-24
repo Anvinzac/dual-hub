@@ -1,47 +1,17 @@
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Sparkles, Briefcase, ShoppingCart, Package, BarChart3, Users, FileText, CreditCard } from "lucide-react";
+import { Sparkles, Briefcase } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import AnimatedBubbles from "@/components/AnimatedBubbles";
-import ConsumerExpandedHub from "@/components/ConsumerExpandedHub";
-import BusinessExpandedHub from "@/components/BusinessExpandedHub";
+import ChildAppStats from "@/features/business/components/ChildAppStats";
+import { consumerPreviewApps } from "@/features/hub/data";
+import { appFolders } from "@/features/business/data/apps";
+import { BUSINESS_BASE_PATH, CONSUMER_BASE_PATH } from "@/features/hub/routes";
 
-import appSocial from "@/assets/app-social.jpg";
-import appQuiz from "@/assets/app-quiz.jpg";
-import appMusic from "@/assets/app-music.jpg";
-import appArt from "@/assets/app-art.jpg";
-import appFitness from "@/assets/app-fitness.jpg";
-import appLanguage from "@/assets/app-language.jpg";
-import appRecipe from "@/assets/app-recipe.jpg";
-import appPhoto from "@/assets/app-photo.jpg";
-
-type ActivePanel = "none" | "consumer" | "business";
-
-const consumerPreviewApps = [
-  { name: "ChatVui", desc: "Trò chuyện vui nhộn với bạn bè, chia sẻ khoảnh khắc đáng nhớ", img: appSocial, tags: ["Xã hội", "Chat"] },
-  { name: "QuizMaster", desc: "Thử thách kiến thức với hàng ngàn câu hỏi thú vị", img: appQuiz, tags: ["Trò chơi", "Giáo dục"] },
-  { name: "BeatDrop", desc: "Nghe nhạc không giới hạn, tạo playlist yêu thích", img: appMusic, tags: ["Âm nhạc"] },
-  { name: "ArtSpace", desc: "Vẽ tranh kỹ thuật số với công cụ sáng tạo", img: appArt, tags: ["Sáng tạo"] },
-  { name: "FitBuddy", desc: "Theo dõi sức khoẻ cùng huấn luyện viên AI", img: appFitness, tags: ["Sức khoẻ"] },
-  { name: "LingoPlay", desc: "Học ngoại ngữ qua trò chơi thú vị", img: appLanguage, tags: ["Học tập"] },
-  { name: "SnapEdit", desc: "Chỉnh sửa ảnh với bộ lọc và sticker độc đáo", img: appPhoto, tags: ["Ảnh", "Sáng tạo"] },
-  { name: "NấuNgon", desc: "Khám phá công thức nấu ăn từ khắp nơi", img: appRecipe, tags: ["Ẩm thực"] },
-];
-
-const businessPreviewApps = [
-  { name: "POS Thông Minh", desc: "Hệ thống bán hàng tại quầy, quản lý đơn hàng nhanh", icon: <ShoppingCart className="w-5 h-5" />, cat: "Bán hàng" },
-  { name: "Quản Lý Kho", desc: "Theo dõi tồn kho, nhập xuất hàng hoá tự động", icon: <Package className="w-5 h-5" />, cat: "Quản lý" },
-  { name: "Báo Cáo Doanh Thu", desc: "Phân tích doanh thu và xu hướng kinh doanh", icon: <BarChart3 className="w-5 h-5" />, cat: "Tài chính" },
-  { name: "CRM Khách Hàng", desc: "Quản lý thông tin và lịch sử mua hàng", icon: <Users className="w-5 h-5" />, cat: "Marketing" },
-  { name: "Hoá Đơn Điện Tử", desc: "Xuất hoá đơn VAT, kết nối cơ quan thuế", icon: <FileText className="w-5 h-5" />, cat: "Tài chính" },
-  { name: "Thanh Toán Online", desc: "Tích hợp QR code và ví điện tử", icon: <CreditCard className="w-5 h-5" />, cat: "Bán hàng" },
-];
+const elegantEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const gentleEase: [number, number, number, number] = [0.33, 1, 0.68, 1];
 
 const Index = () => {
-  const [active, setActive] = useState<ActivePanel>("none");
-
-  const handleSelect = (panel: ActivePanel) => {
-    setActive(panel);
-  };
+  const navigate = useNavigate();
 
   const springTransition = {
     type: "spring" as const,
@@ -50,20 +20,80 @@ const Index = () => {
     mass: 0.8,
   };
 
+  const titleFlyLeft = {
+    hidden: { opacity: 0, x: -120, y: 12, filter: "blur(10px)" },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      filter: "blur(0px)",
+      transition: { duration: 0.95, ease: elegantEase, delay: 0.08 },
+    },
+  };
+
+  const titleFlyRight = {
+    hidden: { opacity: 0, x: 120, y: 12, filter: "blur(10px)" },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      filter: "blur(0px)",
+      transition: { duration: 0.95, ease: elegantEase, delay: 0.3 },
+    },
+  };
+
+  const consumerCardSlide = {
+    hidden: { opacity: 0, x: -42, y: 10, filter: "blur(8px)" },
+    visible: (index: number) => ({
+      opacity: 1,
+      x: 0,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.72,
+        ease: gentleEase,
+        delay: 0.72 + index * 0.07,
+      },
+    }),
+  };
+
+  const businessCardSlide = {
+    hidden: { opacity: 0, x: 42, y: 10, filter: "blur(8px)" },
+    visible: (index: number) => ({
+      opacity: 1,
+      x: 0,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.72,
+        ease: gentleEase,
+        delay: 0.96 + index * 0.075,
+      },
+    }),
+  };
+
+  const promptFade = {
+    hidden: { opacity: 0, y: 12 },
+    visible: (delay: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, ease: gentleEase, delay },
+    }),
+  };
+
   return (
     <div className="h-screen w-screen overflow-hidden flex relative">
       <AnimatePresence mode="wait">
-        {active === "none" && (
-          <>
+        <>
             {/* Consumer panel (left) */}
             <motion.div
               key="consumer-half"
-              initial={{ x: 0 }}
-              animate={{ x: 0, width: "50%" }}
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
               exit={{ x: "-100%", width: 0 }}
               transition={springTransition}
               className="relative h-full cursor-pointer overflow-hidden"
-              onClick={() => handleSelect("consumer")}
+              onClick={() => navigate(CONSUMER_BASE_PATH, { state: { from: "landing" } })}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-consumer-coral/20 via-consumer-bg to-consumer-cyan/15" />
               <AnimatedBubbles />
@@ -71,9 +101,9 @@ const Index = () => {
               <div className="relative h-full flex flex-col overflow-hidden">
                 {/* Big centered title */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.5 }}
+                  initial="hidden"
+                  animate="visible"
+                  variants={titleFlyLeft}
                   className="text-center pt-12 pb-3 shrink-0 px-3"
                 >
                   <div className="w-12 h-12 rounded-2xl bg-consumer-coral/20 flex items-center justify-center mx-auto mb-3">
@@ -82,7 +112,7 @@ const Index = () => {
                   <h2 className="font-playful text-2xl font-extrabold text-consumer-text leading-tight">
                     Bạn khách
                   </h2>
-                  <p className="text-consumer-text-muted text-[10px] mt-1.5">
+                  <p className="text-consumer-text-muted text-xs mt-1.5">
                     Giải trí · Học tập · Kết nối
                   </p>
                 </motion.div>
@@ -93,19 +123,20 @@ const Index = () => {
                     {consumerPreviewApps.map((app, i) => (
                       <motion.div
                         key={app.name}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.35 + i * 0.06 }}
+                        custom={i}
+                        initial="hidden"
+                        animate="visible"
+                        variants={consumerCardSlide}
                         className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-md"
                       >
-                        <img src={app.img} alt={app.name} className="w-full h-full object-cover" loading="lazy" />
+                        <img src={app.imageUrl} alt={app.name} className="w-full h-full object-cover" loading="lazy" />
                         <div className="absolute inset-0 bg-gradient-to-t from-consumer-text/85 via-consumer-text/30 to-transparent" />
                         <div className="absolute bottom-0 left-0 right-0 p-2.5">
-                          <h3 className="font-playful text-sm font-bold text-consumer-surface leading-tight">{app.name}</h3>
-                          <p className="text-consumer-surface/70 text-[9px] mt-0.5 line-clamp-2 leading-relaxed">{app.desc}</p>
+                          <h3 className="font-playful text-lg font-bold text-consumer-surface leading-tight">{app.name}</h3>
+                          <p className="text-consumer-surface/80 text-sm mt-1 line-clamp-2 leading-relaxed">{app.description}</p>
                           <div className="flex gap-1 mt-1">
                             {app.tags.map((t) => (
-                              <span key={t} className="text-[7px] font-semibold px-1.5 py-0.5 rounded-full bg-consumer-coral/25 text-consumer-surface/90">{t}</span>
+                              <span key={t} className="text-xs font-semibold px-2 py-1 rounded-full bg-consumer-coral/25 text-consumer-surface/90">{t}</span>
                             ))}
                           </div>
                         </div>
@@ -116,24 +147,35 @@ const Index = () => {
 
                 {/* Bottom fade + CTA */}
                 <div className="absolute bottom-0 inset-x-0 h-14 bg-gradient-to-t from-consumer-bg to-transparent pointer-events-none" />
-                <div className="absolute bottom-2 inset-x-0 text-center pointer-events-none">
-                  <span className="text-consumer-coral/60 text-[8px] font-semibold uppercase tracking-widest">Nhấn để khám phá →</span>
-                </div>
+                <motion.div
+                  custom={1.06}
+                  initial="hidden"
+                  animate="visible"
+                  variants={promptFade}
+                  className="absolute bottom-2 inset-x-0 text-center pointer-events-none"
+                >
+                  <span className="text-consumer-coral/70 text-[11px] font-semibold uppercase tracking-[0.22em]">Nhấn để khám phá →</span>
+                </motion.div>
               </div>
             </motion.div>
 
             {/* Divider */}
-            <div className="w-[1px] h-full bg-border shrink-0 z-10" />
+            <motion.div
+              initial={{ opacity: 0, scaleY: 0.2 }}
+              animate={{ opacity: 1, scaleY: 1 }}
+              transition={{ duration: 0.7, ease: gentleEase, delay: 0.42 }}
+              className="w-[1px] h-full bg-border shrink-0 z-10 origin-center"
+            />
 
             {/* Business panel (right) */}
             <motion.div
               key="business-half"
-              initial={{ x: 0 }}
-              animate={{ x: 0, width: "50%" }}
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
               exit={{ x: "100%", width: 0 }}
               transition={springTransition}
               className="relative h-full cursor-pointer overflow-hidden"
-              onClick={() => handleSelect("business")}
+              onClick={() => navigate(BUSINESS_BASE_PATH, { state: { from: "landing" } })}
             >
               <div className="absolute inset-0 bg-business-bg" />
               <div
@@ -149,9 +191,9 @@ const Index = () => {
               <div className="relative h-full flex flex-col overflow-hidden">
                 {/* Big centered title */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.5 }}
+                  initial="hidden"
+                  animate="visible"
+                  variants={titleFlyRight}
                   className="text-center pt-12 pb-3 shrink-0 px-3"
                 >
                   <div className="w-12 h-12 rounded-xl bg-business-accent-soft flex items-center justify-center mx-auto mb-3 border border-business-border">
@@ -160,7 +202,7 @@ const Index = () => {
                   <h2 className="font-business text-2xl font-bold text-business-text leading-tight">
                     Bạn quán
                   </h2>
-                  <p className="text-business-text-muted text-[10px] mt-1.5">
+                  <p className="text-business-text-muted text-xs mt-1.5">
                     Quản lý · Bán hàng · Tăng trưởng
                   </p>
                 </motion.div>
@@ -168,93 +210,77 @@ const Index = () => {
                 {/* Scrollable single-column square cards */}
                 <div className="flex-1 overflow-y-auto business-scroll pb-14 px-2">
                   <div className="flex flex-col gap-2.5">
-                    {businessPreviewApps.map((app, i) => (
-                      <motion.div
-                        key={app.name}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4 + i * 0.07 }}
-                        className="relative w-full aspect-square rounded-xl overflow-hidden border border-business-border bg-business-surface/80"
-                      >
-                        {/* Icon area */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-[0.06]">
-                          <div className="scale-[4] text-business-accent">{app.icon}</div>
-                        </div>
-                        {/* Content */}
-                        <div className="relative h-full flex flex-col justify-end p-3">
-                          <div className="flex items-center gap-2 mb-1">
-                            <div className="w-8 h-8 rounded-lg bg-business-accent-soft flex items-center justify-center text-business-accent shrink-0">
-                              {app.icon}
+                    {appFolders.map((folder, i) => {
+                      return (
+                        <motion.div
+                          key={folder.id}
+                          custom={i}
+                          initial="hidden"
+                          animate="visible"
+                          variants={businessCardSlide}
+                          className="relative w-full aspect-square overflow-hidden rounded-[1.35rem] border border-business-border/80 bg-business-surface/85 shadow-[0_16px_30px_rgba(15,23,42,0.26)]"
+                        >
+                          <div className="business-folder-edge" />
+                          <div className="absolute inset-0 bg-gradient-to-br from-business-accent/10 via-transparent to-business-gold/10" />
+                          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent to-business-accent-soft/20" />
+                          <div className="relative h-full flex flex-col p-3">
+                            <div>
+                              <div className="flex items-start justify-between gap-3">
+                                <h3 className="font-business text-lg font-semibold text-business-text leading-tight pr-2">
+                                  {folder.name}
+                                </h3>
+                                <span className="inline-flex shrink-0 text-[11px] font-medium text-business-accent bg-business-accent-soft px-2 py-1 rounded-full w-fit">
+                                  {folder.childApps.length} apps
+                                </span>
+                              </div>
+                              <p className="text-business-text-muted text-sm leading-relaxed mt-2">{folder.description}</p>
                             </div>
-                            <h3 className="font-business text-sm font-semibold text-business-text leading-tight">{app.name}</h3>
+                            <div className="mt-3 flex-1 flex flex-col justify-end gap-2">
+                              {folder.childApps.slice(0, 3).map((child) => (
+                                <div
+                                  key={child.id}
+                                  className="flex items-center gap-3 rounded-xl border border-business-border/70 bg-business-bg/82 px-3 py-2.5"
+                                >
+                                  <div className="w-9 h-9 rounded-lg bg-business-accent-soft border border-business-border flex items-center justify-center text-[11px] font-semibold text-business-text shrink-0">
+                                    {child.iconLabel}
+                                  </div>
+                                  <div className="min-w-0 flex-1">
+                                    <p className="text-xs font-medium leading-snug text-business-text line-clamp-1">
+                                      {child.name}
+                                    </p>
+                                    <ChildAppStats
+                                      hearts={child.hearts}
+                                      tryouts={child.tryouts}
+                                      forks={child.forks}
+                                      className="mt-1"
+                                    />
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
                           </div>
-                          <p className="text-business-text-muted text-[9px] leading-relaxed">{app.desc}</p>
-                          <span className="inline-block mt-1.5 text-[7px] font-medium text-business-accent bg-business-accent-soft px-1.5 py-0.5 rounded w-fit">{app.cat}</span>
-                        </div>
-                      </motion.div>
-                    ))}
+                        </motion.div>
+                      );
+                    })}
                   </div>
                 </div>
 
                 {/* Bottom fade + CTA */}
                 <div className="absolute bottom-0 inset-x-0 h-14 bg-gradient-to-t from-business-bg to-transparent pointer-events-none" />
-                <div className="absolute bottom-2 inset-x-0 text-center pointer-events-none">
-                  <span className="text-business-accent/40 text-[8px] font-medium uppercase tracking-widest">← Nhấn để khám phá</span>
-                </div>
+                <motion.div
+                  custom={1.28}
+                  initial="hidden"
+                  animate="visible"
+                  variants={promptFade}
+                  className="absolute bottom-2 inset-x-0 text-center pointer-events-none"
+                >
+                  <span className="text-business-accent/50 text-[11px] font-medium uppercase tracking-[0.22em]">← Nhấn để khám phá</span>
+                </motion.div>
               </div>
 
               <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-business-accent/5 to-transparent" />
             </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* Expanded Consumer Hub */}
-      <AnimatePresence>
-        {active === "consumer" && (
-          <motion.div
-            key="consumer-expanded"
-            initial={{ x: "-100%", width: "100%" }}
-            animate={{ x: 0, width: "100%" }}
-            exit={{ x: "-100%" }}
-            transition={springTransition}
-            className="absolute inset-0 z-20"
-          >
-            <button
-              onClick={(e) => { e.stopPropagation(); handleSelect("business"); }}
-              className="absolute top-4 right-4 z-30 flex items-center gap-1 px-3 py-1.5 rounded-full bg-business-bg/90 text-business-text text-[10px] font-business font-semibold backdrop-blur-sm border border-business-border shadow-lg hover:bg-business-bg transition-colors"
-            >
-              <Briefcase className="w-3 h-3" />
-              Bạn quán
-              <ChevronRight className="w-3 h-3" />
-            </button>
-            <ConsumerExpandedHub />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Expanded Business Hub */}
-      <AnimatePresence>
-        {active === "business" && (
-          <motion.div
-            key="business-expanded"
-            initial={{ x: "100%", width: "100%" }}
-            animate={{ x: 0, width: "100%" }}
-            exit={{ x: "100%" }}
-            transition={springTransition}
-            className="absolute inset-0 z-20"
-          >
-            <button
-              onClick={(e) => { e.stopPropagation(); handleSelect("consumer"); }}
-              className="absolute top-4 left-4 z-30 flex items-center gap-1 px-3 py-1.5 rounded-full bg-consumer-surface/90 text-consumer-text text-[10px] font-playful font-bold backdrop-blur-sm shadow-lg border border-consumer-coral/20 hover:bg-consumer-surface transition-colors"
-            >
-              <ChevronLeft className="w-3 h-3" />
-              <Sparkles className="w-3 h-3 text-consumer-coral" />
-              Bạn khách
-            </button>
-            <BusinessExpandedHub />
-          </motion.div>
-        )}
+        </>
       </AnimatePresence>
     </div>
   );
