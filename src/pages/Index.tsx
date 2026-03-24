@@ -68,60 +68,58 @@ const Index = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-consumer-coral/20 via-consumer-bg to-consumer-cyan/15" />
               <AnimatedBubbles />
 
-              <div className="relative h-full flex flex-col pt-10 px-2 overflow-hidden">
-                {/* Title */}
+              <div className="relative h-full flex flex-col overflow-hidden">
+                {/* Big centered title */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.5 }}
-                  className="text-center mb-3 shrink-0"
+                  className="text-center pt-12 pb-3 shrink-0 px-3"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-consumer-coral/20 flex items-center justify-center mx-auto mb-2">
-                    <Sparkles className="w-5 h-5 text-consumer-coral" />
+                  <div className="w-12 h-12 rounded-2xl bg-consumer-coral/20 flex items-center justify-center mx-auto mb-3">
+                    <Sparkles className="w-6 h-6 text-consumer-coral" />
                   </div>
-                  <h2 className="font-playful text-lg font-extrabold text-consumer-text leading-tight">
+                  <h2 className="font-playful text-2xl font-extrabold text-consumer-text leading-tight">
                     Bạn khách
                   </h2>
-                  <p className="text-consumer-text-muted text-[9px] mt-1">
+                  <p className="text-consumer-text-muted text-[10px] mt-1.5">
                     Giải trí · Học tập · Kết nối
                   </p>
                 </motion.div>
 
-                {/* Mini app grid */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.35, duration: 0.5 }}
-                  className="flex-1 overflow-y-auto no-scrollbar pb-12"
-                >
-                  <div className="grid grid-cols-2 gap-1.5 px-0.5">
+                {/* Scrollable single-column square cards */}
+                <div className="flex-1 overflow-y-auto consumer-scroll pb-14 px-2">
+                  <div className="flex flex-col gap-2.5">
                     {consumerPreviewApps.map((app, i) => (
                       <motion.div
                         key={app.name}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.4 + i * 0.06 }}
-                        className="relative rounded-xl overflow-hidden aspect-square shadow-sm"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.35 + i * 0.06 }}
+                        className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-md"
                       >
                         <img src={app.img} alt={app.name} className="w-full h-full object-cover" loading="lazy" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-consumer-text/70 to-transparent" />
-                        <span className="absolute bottom-1 left-1.5 right-1 text-consumer-surface font-playful text-[9px] font-bold leading-tight truncate">
-                          {app.name}
-                        </span>
+                        <div className="absolute inset-0 bg-gradient-to-t from-consumer-text/85 via-consumer-text/30 to-transparent" />
+                        <div className="absolute bottom-0 left-0 right-0 p-2.5">
+                          <h3 className="font-playful text-sm font-bold text-consumer-surface leading-tight">{app.name}</h3>
+                          <p className="text-consumer-surface/70 text-[9px] mt-0.5 line-clamp-2 leading-relaxed">{app.desc}</p>
+                          <div className="flex gap-1 mt-1">
+                            {app.tags.map((t) => (
+                              <span key={t} className="text-[7px] font-semibold px-1.5 py-0.5 rounded-full bg-consumer-coral/25 text-consumer-surface/90">{t}</span>
+                            ))}
+                          </div>
+                        </div>
                       </motion.div>
                     ))}
                   </div>
-                </motion.div>
+                </div>
 
-                {/* CTA hint */}
-                <div className="absolute bottom-3 inset-x-0 text-center">
-                  <span className="text-consumer-coral/60 text-[8px] font-semibold uppercase tracking-widest">
-                    Nhấn để khám phá →
-                  </span>
+                {/* Bottom fade + CTA */}
+                <div className="absolute bottom-0 inset-x-0 h-14 bg-gradient-to-t from-consumer-bg to-transparent pointer-events-none" />
+                <div className="absolute bottom-2 inset-x-0 text-center pointer-events-none">
+                  <span className="text-consumer-coral/60 text-[8px] font-semibold uppercase tracking-widest">Nhấn để khám phá →</span>
                 </div>
               </div>
-
-              <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-consumer-bg to-transparent pointer-events-none" />
             </motion.div>
 
             {/* Divider */}
