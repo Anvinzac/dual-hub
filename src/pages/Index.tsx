@@ -17,23 +17,23 @@ import appPhoto from "@/assets/app-photo.jpg";
 type ActivePanel = "none" | "consumer" | "business";
 
 const consumerPreviewApps = [
-  { name: "ChatVui", img: appSocial },
-  { name: "QuizMaster", img: appQuiz },
-  { name: "BeatDrop", img: appMusic },
-  { name: "ArtSpace", img: appArt },
-  { name: "FitBuddy", img: appFitness },
-  { name: "LingoPlay", img: appLanguage },
-  { name: "SnapEdit", img: appPhoto },
-  { name: "NấuNgon", img: appRecipe },
+  { name: "ChatVui", desc: "Trò chuyện vui nhộn với bạn bè, chia sẻ khoảnh khắc đáng nhớ", img: appSocial, tags: ["Xã hội", "Chat"] },
+  { name: "QuizMaster", desc: "Thử thách kiến thức với hàng ngàn câu hỏi thú vị", img: appQuiz, tags: ["Trò chơi", "Giáo dục"] },
+  { name: "BeatDrop", desc: "Nghe nhạc không giới hạn, tạo playlist yêu thích", img: appMusic, tags: ["Âm nhạc"] },
+  { name: "ArtSpace", desc: "Vẽ tranh kỹ thuật số với công cụ sáng tạo", img: appArt, tags: ["Sáng tạo"] },
+  { name: "FitBuddy", desc: "Theo dõi sức khoẻ cùng huấn luyện viên AI", img: appFitness, tags: ["Sức khoẻ"] },
+  { name: "LingoPlay", desc: "Học ngoại ngữ qua trò chơi thú vị", img: appLanguage, tags: ["Học tập"] },
+  { name: "SnapEdit", desc: "Chỉnh sửa ảnh với bộ lọc và sticker độc đáo", img: appPhoto, tags: ["Ảnh", "Sáng tạo"] },
+  { name: "NấuNgon", desc: "Khám phá công thức nấu ăn từ khắp nơi", img: appRecipe, tags: ["Ẩm thực"] },
 ];
 
 const businessPreviewApps = [
-  { name: "POS Thông Minh", icon: <ShoppingCart className="w-4 h-4" /> },
-  { name: "Quản Lý Kho", icon: <Package className="w-4 h-4" /> },
-  { name: "Báo Cáo", icon: <BarChart3 className="w-4 h-4" /> },
-  { name: "CRM", icon: <Users className="w-4 h-4" /> },
-  { name: "Hoá Đơn", icon: <FileText className="w-4 h-4" /> },
-  { name: "Thanh Toán", icon: <CreditCard className="w-4 h-4" /> },
+  { name: "POS Thông Minh", desc: "Hệ thống bán hàng tại quầy, quản lý đơn hàng nhanh", icon: <ShoppingCart className="w-5 h-5" />, cat: "Bán hàng" },
+  { name: "Quản Lý Kho", desc: "Theo dõi tồn kho, nhập xuất hàng hoá tự động", icon: <Package className="w-5 h-5" />, cat: "Quản lý" },
+  { name: "Báo Cáo Doanh Thu", desc: "Phân tích doanh thu và xu hướng kinh doanh", icon: <BarChart3 className="w-5 h-5" />, cat: "Tài chính" },
+  { name: "CRM Khách Hàng", desc: "Quản lý thông tin và lịch sử mua hàng", icon: <Users className="w-5 h-5" />, cat: "Marketing" },
+  { name: "Hoá Đơn Điện Tử", desc: "Xuất hoá đơn VAT, kết nối cơ quan thuế", icon: <FileText className="w-5 h-5" />, cat: "Tài chính" },
+  { name: "Thanh Toán Online", desc: "Tích hợp QR code và ví điện tử", icon: <CreditCard className="w-5 h-5" />, cat: "Bán hàng" },
 ];
 
 const Index = () => {
