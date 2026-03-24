@@ -101,7 +101,7 @@ const BusinessIndex = () => {
 
   return (
     <AudiencePageTransition audience="business">
-      <div className="business-shell bg-themed-gradient min-h-screen pb-20 text-foreground">
+      <div className="business-shell bg-themed-gradient h-screen overflow-y-auto business-scroll pb-20 text-foreground">
         <div className="sticky top-0 z-40 backdrop-blur-xl border-b border-border/50" style={{ background: "hsl(var(--glass-bg))" }}>
           <div className="px-4 pt-4 pb-2">
             <div className="flex items-center justify-between mb-3">
@@ -222,7 +222,7 @@ const BusinessIndex = () => {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 8 }}
                           transition={{ duration: 0.22 }}
-                          className="grid gap-3 md:grid-cols-3"
+                          className="flex gap-3 overflow-x-auto no-scrollbar pb-1"
                         >
                           {folder.childApps.map((child) => (
                             <motion.div
@@ -231,6 +231,7 @@ const BusinessIndex = () => {
                               animate={{ opacity: 1, y: 0 }}
                               exit={{ opacity: 0, y: 8 }}
                               transition={{ duration: 0.22 }}
+                              className="min-w-[260px] max-w-[280px] shrink-0"
                             >
                               <FolderChildCard
                                 app={{
@@ -245,20 +246,6 @@ const BusinessIndex = () => {
                             </motion.div>
                           ))}
                         </motion.div>
-
-                        <div className="mt-3 flex items-center justify-between gap-3 rounded-2xl border border-business-border/70 bg-business-surface/60 px-3 py-2.5">
-                          <div>
-                            <p className="text-sm uppercase tracking-[0.14em] text-business-text-muted">Parent template</p>
-                            <p className="text-base font-semibold text-business-text">{app.name}</p>
-                          </div>
-                          <button
-                            type="button"
-                            className="rounded-xl border border-business-border px-3.5 py-2 text-sm font-medium text-business-text active:scale-95 transition-transform"
-                            onClick={() => handleTapName(app)}
-                          >
-                            Open parent app
-                          </button>
-                        </div>
                       </div>
                     </motion.div>
                   )}

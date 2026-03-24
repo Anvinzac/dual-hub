@@ -6,6 +6,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import ErrorBoundary from "@/features/business/components/ErrorBoundary";
 import { LikedAppsProvider } from "@/features/business/hooks/useLikedApps";
 import AiGuide from "@/features/business/pages/AiGuide";
+import AdminDashboard from "@/features/admin/pages/AdminDashboard";
+import AdminLanding from "@/features/admin/pages/AdminLanding";
 import Bookmarks from "@/features/business/pages/Bookmarks";
 import BusinessIndex from "@/features/business/pages/BusinessIndex";
 import Remixes from "@/features/business/pages/Remixes";
@@ -28,6 +30,9 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/consumer" element={<ConsumerHubPage />} />
               <Route path="/business" element={<BusinessIndex />} />
+              <Route path="/admin" element={<AdminLanding />} />
+              <Route path="/admin/consumer" element={<AdminDashboard audience="consumer" backPath="/admin" title="Consumer Admin" subtitle="Consumer team" />} />
+              <Route path="/admin/business" element={<AdminDashboard audience="business" backPath="/admin" title="Business Admin" subtitle="Business team" />} />
               <Route path="/business/bookmarks" element={<Bookmarks />} />
               <Route path="/business/remixes/:appId" element={<Remixes />} />
               <Route path="/business/ai-guide" element={<AiGuide />} />

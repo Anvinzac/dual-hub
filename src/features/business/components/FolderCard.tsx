@@ -18,9 +18,16 @@ const FolderCard = ({ folder, appCount, isOpen, onToggle }: FolderCardProps) => 
       type="button"
       onClick={onToggle}
       aria-expanded={isOpen}
-      className="relative w-full rounded-[1.45rem] border border-business-border/70 bg-business-surface/95 px-4 pb-4 pt-5 text-left active:scale-[0.995] transition-all duration-300"
+      className="relative w-full rounded-[1.45rem] bg-business-surface/95 px-4 pb-4 pt-5 text-left active:scale-[0.995] transition-all duration-300"
     >
-      <div className="business-folder-edge" />
+      <div
+        className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-business-accent/70 to-transparent"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute -right-8 -top-8 h-20 w-20 rounded-full bg-business-accent/10 blur-2xl"
+        aria-hidden="true"
+      />
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-start gap-3 min-w-0">
           <div className="w-11 h-11 rounded-2xl bg-business-accent-soft flex items-center justify-center shrink-0 border border-business-border">
@@ -29,7 +36,7 @@ const FolderCard = ({ folder, appCount, isOpen, onToggle }: FolderCardProps) => 
           <div className="min-w-0">
             <p className="text-base font-semibold font-display text-foreground">{folder.name}</p>
             <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">{folder.description}</p>
-            <div className="mt-3 flex flex-col gap-2">
+            <div className="mt-3 hidden lg:flex flex-col gap-2">
               {folder.childApps.slice(0, 3).map((child) => (
                 <div
                   key={child.id}

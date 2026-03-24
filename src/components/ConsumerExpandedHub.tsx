@@ -3,8 +3,8 @@ import ConsumerAppCard from "./ConsumerAppCard";
 import HubCategoryList from "@/features/hub/components/HubCategoryList";
 import HubHeader from "@/features/hub/components/HubHeader";
 import HubSearchInput from "@/features/hub/components/HubSearchInput";
+import { useAudienceCatalog } from "@/features/admin/hooks/useAudienceCatalog";
 import {
-  consumerApps,
   consumerCategories,
   consumerHeader,
 } from "@/features/hub/data";
@@ -13,6 +13,7 @@ const ConsumerExpandedHub = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState(consumerCategories[0]?.label ?? "");
   const SectionIcon = consumerHeader.sectionIcon;
+  const { data: consumerApps = [] } = useAudienceCatalog("consumer");
   const normalizedQuery = searchQuery.trim().toLowerCase();
 
   const visibleApps = consumerApps.filter((app) => {
@@ -20,7 +21,7 @@ const ConsumerExpandedHub = () => {
       activeCategory === "Nổi bật" || app.tags.includes(activeCategory);
     const matchesQuery =
       normalizedQuery.length === 0 ||
-      app.title.toLowerCase().includes(normalizedQuery) ||
+      app.name.toLowerCase().includes(normalizedQuery) ||
       app.description.toLowerCase().includes(normalizedQuery) ||
       app.tags.some((tag) => tag.toLowerCase().includes(normalizedQuery));
 
@@ -71,7 +72,16 @@ const ConsumerExpandedHub = () => {
 
       <div data-testid="consumer-app-grid" className="px-5 pb-8 grid grid-cols-2 gap-3">
         {visibleApps.map((app) => (
-          <ConsumerAppCard key={app.title} {...app} />
+          <ConsumerAppCard
+            key={app.id}
+            title={app.name}
+            description={app.description}
+            tags={app.tags}
+            plays={app.tryouts}
+            favorites={app.favorites}
+            imageUrl={app.imageUrl ?? ""}
+            url={app.url || "#"}
+          />
         ))}
       </div>
     </div>

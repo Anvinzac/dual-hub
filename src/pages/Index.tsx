@@ -220,7 +220,14 @@ const Index = () => {
                           variants={businessCardSlide}
                           className="relative w-full aspect-square overflow-hidden rounded-[1.35rem] border border-business-border/80 bg-business-surface/85 shadow-[0_16px_30px_rgba(15,23,42,0.26)]"
                         >
-                          <div className="business-folder-edge" />
+                          <div
+                            className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-business-accent/70 to-transparent"
+                            aria-hidden="true"
+                          />
+                          <div
+                            className="absolute -right-10 -top-10 h-24 w-24 rounded-full bg-business-accent/10 blur-2xl"
+                            aria-hidden="true"
+                          />
                           <div className="absolute inset-0 bg-gradient-to-br from-business-accent/10 via-transparent to-business-gold/10" />
                           <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent to-business-accent-soft/20" />
                           <div className="relative h-full flex flex-col p-3">
