@@ -146,61 +146,63 @@ const Index = () => {
               />
               <div className="absolute inset-0 shimmer-bg" />
 
-              <div className="relative h-full flex flex-col pt-10 px-2 overflow-hidden">
-                {/* Title */}
+              <div className="relative h-full flex flex-col overflow-hidden">
+                {/* Big centered title */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, duration: 0.5 }}
-                  className="text-center mb-3 shrink-0"
+                  className="text-center pt-12 pb-3 shrink-0 px-3"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-business-accent-soft flex items-center justify-center mx-auto mb-2 border border-business-border">
-                    <Briefcase className="w-5 h-5 text-business-accent" />
+                  <div className="w-12 h-12 rounded-xl bg-business-accent-soft flex items-center justify-center mx-auto mb-3 border border-business-border">
+                    <Briefcase className="w-6 h-6 text-business-accent" />
                   </div>
-                  <h2 className="font-business text-lg font-bold text-business-text leading-tight">
+                  <h2 className="font-business text-2xl font-bold text-business-text leading-tight">
                     Bạn quán
                   </h2>
-                  <p className="text-business-text-muted text-[9px] mt-1">
+                  <p className="text-business-text-muted text-[10px] mt-1.5">
                     Quản lý · Bán hàng · Tăng trưởng
                   </p>
                 </motion.div>
 
-                {/* Mini app list */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.5 }}
-                  className="flex-1 overflow-y-auto no-scrollbar pb-12"
-                >
-                  <div className="flex flex-col gap-1.5 px-0.5">
+                {/* Scrollable single-column square cards */}
+                <div className="flex-1 overflow-y-auto business-scroll pb-14 px-2">
+                  <div className="flex flex-col gap-2.5">
                     {businessPreviewApps.map((app, i) => (
                       <motion.div
                         key={app.name}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.45 + i * 0.07 }}
-                        className="flex items-center gap-2 rounded-lg bg-business-surface/60 border border-business-border p-2"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4 + i * 0.07 }}
+                        className="relative w-full aspect-square rounded-xl overflow-hidden border border-business-border bg-business-surface/80"
                       >
-                        <div className="w-7 h-7 rounded-md bg-business-accent-soft flex items-center justify-center text-business-accent shrink-0">
-                          {app.icon}
+                        {/* Icon area */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-[0.06]">
+                          <div className="scale-[4] text-business-accent">{app.icon}</div>
                         </div>
-                        <span className="text-business-text font-business text-[10px] font-semibold truncate">
-                          {app.name}
-                        </span>
+                        {/* Content */}
+                        <div className="relative h-full flex flex-col justify-end p-3">
+                          <div className="flex items-center gap-2 mb-1">
+                            <div className="w-8 h-8 rounded-lg bg-business-accent-soft flex items-center justify-center text-business-accent shrink-0">
+                              {app.icon}
+                            </div>
+                            <h3 className="font-business text-sm font-semibold text-business-text leading-tight">{app.name}</h3>
+                          </div>
+                          <p className="text-business-text-muted text-[9px] leading-relaxed">{app.desc}</p>
+                          <span className="inline-block mt-1.5 text-[7px] font-medium text-business-accent bg-business-accent-soft px-1.5 py-0.5 rounded w-fit">{app.cat}</span>
+                        </div>
                       </motion.div>
                     ))}
                   </div>
-                </motion.div>
+                </div>
 
-                {/* CTA hint */}
-                <div className="absolute bottom-3 inset-x-0 text-center">
-                  <span className="text-business-accent/40 text-[8px] font-medium uppercase tracking-widest">
-                    ← Nhấn để khám phá
-                  </span>
+                {/* Bottom fade + CTA */}
+                <div className="absolute bottom-0 inset-x-0 h-14 bg-gradient-to-t from-business-bg to-transparent pointer-events-none" />
+                <div className="absolute bottom-2 inset-x-0 text-center pointer-events-none">
+                  <span className="text-business-accent/40 text-[8px] font-medium uppercase tracking-widest">← Nhấn để khám phá</span>
                 </div>
               </div>
 
-              <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-business-bg to-transparent pointer-events-none" />
               <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-business-accent/5 to-transparent" />
             </motion.div>
           </>
