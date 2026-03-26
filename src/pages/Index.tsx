@@ -109,10 +109,10 @@ const Index = () => {
                   <div className="w-12 h-12 rounded-2xl bg-consumer-coral/20 flex items-center justify-center mx-auto mb-3">
                     <Sparkles className="w-6 h-6 text-consumer-coral" />
                   </div>
-                  <h2 className="font-playful text-2xl font-extrabold text-consumer-text leading-tight">
+                  <h2 className="font-playful text-4xl font-extrabold text-consumer-text leading-none">
                     Bạn khách
                   </h2>
-                  <p className="text-consumer-text-muted text-xs mt-1.5">
+                  <p className="text-consumer-text-muted text-sm mt-1.5">
                     Giải trí · Học tập · Kết nối
                   </p>
                 </motion.div>
@@ -199,10 +199,10 @@ const Index = () => {
                   <div className="w-12 h-12 rounded-xl bg-business-accent-soft flex items-center justify-center mx-auto mb-3 border border-business-border">
                     <Briefcase className="w-6 h-6 text-business-accent" />
                   </div>
-                  <h2 className="font-business text-2xl font-bold text-business-text leading-tight">
+                  <h2 className="font-business text-4xl font-bold text-business-text leading-none">
                     Bạn quán
                   </h2>
-                  <p className="text-business-text-muted text-xs mt-1.5">
+                  <p className="text-business-text-muted text-sm mt-1.5">
                     Quản lý · Bán hàng · Tăng trưởng
                   </p>
                 </motion.div>
