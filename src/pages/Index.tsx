@@ -3,7 +3,7 @@ import { Sparkles, Briefcase } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import AnimatedBubbles from "@/components/AnimatedBubbles";
 import ChildAppStats from "@/features/business/components/ChildAppStats";
-import { consumerPreviewApps } from "@/features/hub/data";
+import { useConsumerPreviewApps } from "@/hooks/useConsumerPreviewApps";
 import { appFolders } from "@/features/business/data/apps";
 import { BUSINESS_BASE_PATH, CONSUMER_BASE_PATH } from "@/features/hub/routes";
 
@@ -12,6 +12,7 @@ const gentleEase: [number, number, number, number] = [0.33, 1, 0.68, 1];
 
 const Index = () => {
   const navigate = useNavigate();
+  const { apps: consumerPreviewApps } = useConsumerPreviewApps();
 
   const springTransition = {
     type: "spring" as const,
@@ -109,10 +110,10 @@ const Index = () => {
                   <div className="w-12 h-12 rounded-2xl bg-consumer-coral/20 flex items-center justify-center mx-auto mb-3">
                     <Sparkles className="w-6 h-6 text-consumer-coral" />
                   </div>
-                  <h2 className="font-playful text-4xl font-extrabold text-consumer-text leading-none">
+                  <h2 className="font-playful text-5xl font-extrabold text-consumer-text leading-none">
                     Bạn khách
                   </h2>
-                  <p className="text-consumer-text-muted text-sm mt-1.5">
+                  <p className="text-consumer-text-muted text-base mt-1.5">
                     Giải trí · Học tập · Kết nối
                   </p>
                 </motion.div>
@@ -199,10 +200,10 @@ const Index = () => {
                   <div className="w-12 h-12 rounded-xl bg-business-accent-soft flex items-center justify-center mx-auto mb-3 border border-business-border">
                     <Briefcase className="w-6 h-6 text-business-accent" />
                   </div>
-                  <h2 className="font-business text-4xl font-bold text-business-text leading-none">
+                  <h2 className="font-business text-5xl font-bold text-business-text leading-none">
                     Bạn quán
                   </h2>
-                  <p className="text-business-text-muted text-sm mt-1.5">
+                  <p className="text-business-text-muted text-base mt-1.5">
                     Quản lý · Bán hàng · Tăng trưởng
                   </p>
                 </motion.div>
