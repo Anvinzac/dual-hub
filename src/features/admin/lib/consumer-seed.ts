@@ -1,0 +1,80 @@
+import appSocial from "@/assets/app-social.jpg";
+import appQuiz from "@/assets/app-quiz.jpg";
+import appMusic from "@/assets/app-music.jpg";
+import appArt from "@/assets/app-art.jpg";
+import appFitness from "@/assets/app-fitness.jpg";
+
+import type { CatalogApp } from "@/features/admin/lib/catalog";
+
+export const consumerApps: CatalogApp[] = [
+  {
+    id: "cv-tify",
+    audience: "consumer",
+    name: "CV-tify",
+    description: "CV builder with polished templates, ATS-friendly structure, and quick export for job applications.",
+    url: "",
+    repo: "",
+    imageUrl: appSocial,
+    tags: ["Nổi bật", "Career", "Tools"],
+    category: "Career",
+    favorites: 8200,
+    tryouts: 24100,
+    forks: 640,
+  },
+  {
+    id: "each-other-understanding",
+    audience: "consumer",
+    name: "Each Other Understanding",
+    description: "A guided relationship journal for couples and friends to reflect, compare answers, and grow closer.",
+    url: "",
+    repo: "",
+    imageUrl: appQuiz,
+    tags: ["Nổi bật", "Social", "Journal"],
+    category: "Social",
+    favorites: 10900,
+    tryouts: 35200,
+    forks: 910,
+  },
+  {
+    id: "giftgave",
+    audience: "consumer",
+    name: "GiftGave",
+    description: "Gift planner with shared wishlists, occasion reminders, and a calm design for thoughtful giving.",
+    url: "",
+    repo: "",
+    imageUrl: appMusic,
+    tags: ["Lifestyle", "Sharing"],
+    category: "Lifestyle",
+    favorites: 6900,
+    tryouts: 17700,
+    forks: 310,
+  },
+  {
+    id: "cloudpaste",
+    audience: "consumer",
+    name: "CloudPaste",
+    description: "Minimal paste storage for snippets, notes, and quick links, with one-tap sharing across devices.",
+    url: "",
+    repo: "",
+    imageUrl: appArt,
+    tags: ["Productivity", "Sync"],
+    category: "Productivity",
+    favorites: 12400,
+    tryouts: 41800,
+    forks: 1230,
+  },
+  {
+    id: "debtdiv",
+    audience: "consumer",
+    name: "DebtDiv",
+    description: "A friendly debt tracker that splits payments, visualizes progress, and keeps repayment plans simple.",
+    url: "",
+    repo: "",
+    imageUrl: appFitness,
+    tags: ["Finance", "Planning"],
+    category: "Finance",
+    favorites: 5600,
+    tryouts: 14900,
+    forks: 275,
+  },
+];

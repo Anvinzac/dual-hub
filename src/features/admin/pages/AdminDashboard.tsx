@@ -124,6 +124,9 @@ const AdminDashboard = ({ audience, backPath, title, subtitle }: AdminDashboardP
                     <div className="min-w-0">
                       <p className="font-semibold text-business-text truncate">{app.name}</p>
                       <p className="text-xs text-business-text-muted mt-1 line-clamp-2">{app.description}</p>
+                      <p className="text-[11px] text-business-text-muted mt-2 truncate">
+                        {app.url || "Direct URL pending"}
+                      </p>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
                       <button

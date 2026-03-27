@@ -31,7 +31,6 @@ import type {
   BusinessPreviewApp,
   BusinessStat,
   CategoryOption,
-  ConsumerApp,
   ConsumerPreviewApp,
 } from "@/features/hub/types";
 
@@ -72,15 +71,6 @@ export const businessCategories: CategoryOption[] = [
   { label: "Tài chính" },
   { label: "Nhân sự" },
   { label: "Marketing" },
-];
-
-export const consumerApps: ConsumerApp[] = [
-  { title: "ChatVui", description: "Trò chuyện vui nhộn với bạn bè, chia sẻ khoảnh khắc đáng nhớ mỗi ngày", tags: ["Xã hội", "Chat", "Miễn phí"], plays: 45200, favorites: 12800, imageUrl: appSocial, url: "#" },
-  { title: "QuizMaster", description: "Thử thách kiến thức với hàng ngàn câu hỏi thú vị từ nhiều chủ đề", tags: ["Trò chơi", "Giáo dục"], plays: 32100, favorites: 8900, imageUrl: appQuiz, url: "#" },
-  { title: "BeatDrop", description: "Nghe nhạc không giới hạn, tạo playlist và khám phá nghệ sĩ mới", tags: ["Âm nhạc", "Giải trí"], plays: 67500, favorites: 23400, imageUrl: appMusic, url: "#" },
-  { title: "ArtSpace", description: "Vẽ tranh kỹ thuật số với hàng trăm công cụ và hiệu ứng sáng tạo", tags: ["Sáng tạo", "Nghệ thuật"], plays: 18700, favorites: 6200, imageUrl: appArt, url: "#" },
-  { title: "FitBuddy", description: "Theo dõi sức khoẻ, lập kế hoạch tập luyện cùng huấn luyện viên AI", tags: ["Sức khoẻ", "Thể thao"], plays: 28300, favorites: 9100, imageUrl: appFitness, url: "#" },
-  { title: "LingoPlay", description: "Học ngoại ngữ qua trò chơi, phát âm chuẩn với AI thông minh", tags: ["Học tập", "Ngôn ngữ"], plays: 51800, favorites: 15600, imageUrl: appLanguage, url: "#" },
 ];
 
 export const businessApps: BusinessApp[] = [

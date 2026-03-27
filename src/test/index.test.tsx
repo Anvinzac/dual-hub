@@ -27,24 +27,24 @@ describe("Dual Hub landing flow", () => {
     expect(screen.getByRole("button", { name: "Gallery" })).toBeInTheDocument();
   });
 
-  it("filters the consumer apps by category and search", () => {
+  it("filters the consumer apps by category and search", async () => {
     window.history.pushState({}, "", "/");
     render(<App />);
 
     fireEvent.click(screen.getByAltText("ChatVui"));
-    fireEvent.click(screen.getByRole("button", { name: "Âm nhạc" }));
+    await screen.findByText("CV-tify");
 
     const consumerGrid = within(screen.getByTestId("consumer-app-grid"));
 
-    expect(consumerGrid.getByText("BeatDrop")).toBeInTheDocument();
-    expect(consumerGrid.queryByText("ChatVui")).not.toBeInTheDocument();
-
     fireEvent.change(screen.getByPlaceholderText("Tìm ứng dụng yêu thích..."), {
-      target: { value: "Beat" },
+      target: { value: "Cloud" },
     });
 
-    expect(consumerGrid.getByText("BeatDrop")).toBeInTheDocument();
-    expect(consumerGrid.queryByText("ArtSpace")).not.toBeInTheDocument();
+    expect(consumerGrid.getByText("CloudPaste")).toBeInTheDocument();
+    expect(consumerGrid.queryByText("CV-tify")).not.toBeInTheDocument();
+
+    expect(consumerGrid.getByText("CloudPaste")).toBeInTheDocument();
+    expect(consumerGrid.queryByText("DebtDiv")).not.toBeInTheDocument();
   });
 
   it("switches from business hub back to consumer hub directly", async () => {

@@ -32,6 +32,132 @@ export type Database = {
         }
         Relationships: []
       }
+      consumer_apps: {
+        Row: {
+          category: string
+          created_at: string | null
+          description: string | null
+          forks: number
+          id: string
+          image_url: string | null
+          name: string
+          repo: string | null
+          tags: string[] | null
+          updated_at: string | null
+          url: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string | null
+          description?: string | null
+          forks?: number
+          id: string
+          image_url?: string | null
+          name: string
+          repo?: string | null
+          tags?: string[] | null
+          updated_at?: string | null
+          url: string
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          description?: string | null
+          forks?: number
+          id?: string
+          image_url?: string | null
+          name?: string
+          repo?: string | null
+          tags?: string[] | null
+          updated_at?: string | null
+          url?: string
+        }
+        Relationships: []
+      }
+      consumer_app_stats: {
+        Row: {
+          app_id: string
+          favorites: number
+          forks: number
+          tryouts: number
+        }
+        Insert: {
+          app_id: string
+          favorites?: number
+          forks?: number
+          tryouts?: number
+        }
+        Update: {
+          app_id?: string
+          favorites?: number
+          forks?: number
+          tryouts?: number
+        }
+        Relationships: []
+      }
+      business_apps: {
+        Row: {
+          category: string
+          created_at: string | null
+          description: string | null
+          forks: number
+          id: string
+          image_url: string | null
+          name: string
+          repo: string | null
+          tags: string[] | null
+          updated_at: string | null
+          url: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string | null
+          description?: string | null
+          forks?: number
+          id: string
+          image_url?: string | null
+          name: string
+          repo?: string | null
+          tags?: string[] | null
+          updated_at?: string | null
+          url: string
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          description?: string | null
+          forks?: number
+          id?: string
+          image_url?: string | null
+          name?: string
+          repo?: string | null
+          tags?: string[] | null
+          updated_at?: string | null
+          url?: string
+        }
+        Relationships: []
+      }
+      business_app_stats: {
+        Row: {
+          app_id: string
+          favorites: number
+          forks: number
+          tryouts: number
+        }
+        Insert: {
+          app_id: string
+          favorites?: number
+          forks?: number
+          tryouts?: number
+        }
+        Update: {
+          app_id?: string
+          favorites?: number
+          forks?: number
+          tryouts?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

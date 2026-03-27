@@ -3,7 +3,7 @@ import {
   apps as businessFallbackApps,
   remixes as businessFallbackRemixes,
 } from "@/features/business/data/apps";
-import { consumerApps as consumerFallbackApps } from "@/features/hub/data";
+import { consumerApps as consumerFallbackApps } from "@/features/admin/lib/consumer-seed";
 
 export type Audience = "consumer" | "business";
 
@@ -25,25 +25,47 @@ export interface CatalogApp {
   updatedAt?: string;
 }
 
-type SupabaseQueryResult<T> = Promise<{ data: T | null; error: { code?: string; message?: string } | null }>;
+type CatalogTableRow = {
+  id: string;
+  name: string;
+  description: string | null;
+  url: string;
+  repo: string | null;
+  image_url: string | null;
+  tags: string[] | null;
+  category: string | null;
+  forks: number | null;
+  created_at: string | null;
+  updated_at: string | null;
+};
 
-type AdminDb = {
+type StatsRow = {
+  app_id: string;
+  favorites: number | null;
+  tryouts: number | null;
+  forks: number | null;
+};
+
+type CatalogDatabase = {
   from: (table: string) => {
-    select: (columns?: string) => SupabaseQueryResult<unknown[]>;
-    order: (column: string, options: { ascending: boolean }) => {
-      select: (columns?: string) => SupabaseQueryResult<unknown[]>;
+    select: (columns?: string) => Promise<{ data: unknown[] | null; error: { code?: string; message?: string } | null }>;
+    order: (
+      column: string,
+      options: { ascending: boolean },
+    ) => {
+      select: (columns?: string) => Promise<{ data: unknown[] | null; error: { code?: string; message?: string } | null }>;
     };
-    upsert: (payload: unknown, options?: { onConflict?: string }) => SupabaseQueryResult<unknown>;
+    upsert: (payload: unknown, options?: { onConflict?: string }) => Promise<{ error: { code?: string; message?: string } | null }>;
     delete: () => {
-      eq: (column: string, value: string) => SupabaseQueryResult<unknown>;
-    };
-    eq: (column: string, value: string) => {
-      select: (columns?: string) => SupabaseQueryResult<unknown[]>;
+      eq: (
+        column: string,
+        value: string,
+      ) => Promise<{ error: { code?: string; message?: string } | null }>;
     };
   };
 };
 
-const db = supabase as unknown as AdminDb;
+const db = supabase as unknown as CatalogDatabase;
 
 const mapBusinessFallback = (): CatalogApp[] =>
   businessFallbackApps.map((app) => ({
@@ -62,18 +84,18 @@ const mapBusinessFallback = (): CatalogApp[] =>
 
 const mapConsumerFallback = (): CatalogApp[] =>
   consumerFallbackApps.map((app) => ({
-    id: app.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+    id: app.id,
     audience: "consumer",
-    name: app.title,
+    name: app.name,
     description: app.description,
     url: app.url,
-    repo: "",
+    repo: app.repo,
     imageUrl: app.imageUrl,
     tags: [...app.tags],
     category: app.tags[0] ?? "Nổi bật",
     favorites: app.favorites,
-    tryouts: app.plays,
-    forks: 0,
+    tryouts: app.tryouts,
+    forks: app.forks,
   }));
 
 const fallbackAppsForAudience = (audience: Audience) =>
@@ -83,38 +105,32 @@ export const fetchCatalogApps = async (audience: Audience): Promise<CatalogApp[]
   try {
     const table = audience === "consumer" ? "consumer_apps" : "business_apps";
     const statsTable = audience === "consumer" ? "consumer_app_stats" : "business_app_stats";
-    const { data: appsData, error: appsError } = await db.from(table).order("created_at", { ascending: true }).select("*");
+    const { data: appsData, error: appsError } = await db
+      .from(table)
+      .order("created_at", { ascending: true })
+      .select("*");
     const { data: statsData } = await db.from(statsTable).select("*");
-    if (appsError || !appsData) return fallbackAppsForAudience(audience);
+
+    if (appsError || !appsData || appsData.length === 0) return fallbackAppsForAudience(audience);
 
     const statsMap = new Map<string, { favorites: number; tryouts: number; forks: number }>();
     (statsData ?? []).forEach((row) => {
-      const typedRow = row as { app_id: string; favorites?: number; hearts?: number; tryouts?: number; forks?: number };
+      const typedRow = row as StatsRow;
       statsMap.set(typedRow.app_id, {
-        favorites: typedRow.favorites ?? typedRow.hearts ?? 0,
+        favorites: typedRow.favorites ?? 0,
         tryouts: typedRow.tryouts ?? 0,
         forks: typedRow.forks ?? 0,
       });
     });
 
     return appsData.map((row) => {
-      const typedRow = row as {
-        id: string;
-        name: string;
-        description?: string | null;
-        url?: string | null;
-        repo?: string | null;
-        image_url?: string | null;
-        imageUrl?: string | null;
-        tags?: string[] | null;
-        category?: string | null;
-        favorites?: number | null;
-        tryouts?: number | null;
-        forks?: number | null;
-        created_at?: string | null;
-        updated_at?: string | null;
+      const typedRow = row as CatalogTableRow;
+      const stats = statsMap.get(typedRow.id) ?? {
+        favorites: 0,
+        tryouts: 0,
+        forks: typedRow.forks ?? 0,
       };
-      const stats = statsMap.get(typedRow.id) ?? { favorites: typedRow.favorites ?? 0, tryouts: typedRow.tryouts ?? 0, forks: typedRow.forks ?? 0 };
+
       return {
         id: typedRow.id,
         audience,
@@ -122,7 +138,7 @@ export const fetchCatalogApps = async (audience: Audience): Promise<CatalogApp[]
         description: typedRow.description ?? "",
         url: typedRow.url ?? "",
         repo: typedRow.repo ?? "",
-        imageUrl: typedRow.image_url ?? typedRow.imageUrl ?? undefined,
+        imageUrl: typedRow.image_url ?? undefined,
         tags: typedRow.tags ?? [],
         category: typedRow.category ?? typedRow.tags?.[0] ?? "General",
         favorites: stats.favorites,
@@ -155,12 +171,17 @@ export const upsertCatalogApp = async (app: CatalogApp) => {
   const { error } = await db.from(table).upsert(payload, { onConflict: "id" });
   if (error) throw error;
 
-  await db.from(statsTable).upsert({
-    app_id: app.id,
-    favorites: app.favorites,
-    tryouts: app.tryouts,
-    forks: app.forks,
-  }, { onConflict: "app_id" });
+  const { error: statsError } = await db.from(statsTable).upsert(
+    {
+      app_id: app.id,
+      favorites: app.favorites,
+      tryouts: app.tryouts,
+      forks: app.forks,
+    },
+    { onConflict: "app_id" },
+  );
+
+  if (statsError) throw statsError;
 };
 
 export const deleteCatalogApp = async (audience: Audience, id: string) => {
@@ -170,4 +191,4 @@ export const deleteCatalogApp = async (audience: Audience, id: string) => {
   await db.from(table).delete().eq("id", id);
 };
 
-export const seedBusinessCatalog = businessFallbackRemixes;
+export const businessSeeds = businessFallbackRemixes;
