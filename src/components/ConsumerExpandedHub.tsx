@@ -68,6 +68,15 @@ const ConsumerExpandedHub = () => {
           <SectionIcon className="w-5 h-5 text-consumer-magenta" />
           <h2 className="font-playful text-xl font-bold text-consumer-text">{consumerHeader.sectionTitle}</h2>
         </div>
+        <div className="mt-3 rounded-2xl border border-consumer-coral/20 bg-consumer-surface/80 px-4 py-3 shadow-[0_12px_28px_rgba(251,113,133,0.08)]">
+          <div className="flex items-center gap-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-consumer-amber shadow-[0_0_12px_hsl(38_95%_58%/0.8)]" />
+            <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-consumer-coral">Live catalog</span>
+          </div>
+          <p className="mt-1.5 text-sm text-consumer-text-muted">
+            DB-backed and admin editable. Changes should appear here immediately.
+          </p>
+        </div>
       </div>
 
       <div data-testid="consumer-app-grid" className="px-5 pb-8 grid grid-cols-2 gap-3">
@@ -81,6 +90,7 @@ const ConsumerExpandedHub = () => {
             favorites={app.favorites}
             imageUrl={app.imageUrl ?? ""}
             url={app.url || "#"}
+            statusLabel={app.url ? "Live catalog" : "URL pending"}
           />
         ))}
       </div>

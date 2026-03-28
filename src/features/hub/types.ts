@@ -13,6 +13,7 @@ export interface ConsumerPreviewApp {
   description: string;
   imageUrl: string;
   tags: string[];
+  status: string;
 }
 
 export interface BusinessPreviewApp {

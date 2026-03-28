@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Briefcase } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import AnimatedBubbles from "@/components/AnimatedBubbles";
+import ConsumerAppCard from "@/components/ConsumerAppCard";
 import ChildAppStats from "@/features/business/components/ChildAppStats";
 import { useConsumerPreviewApps } from "@/hooks/useConsumerPreviewApps";
 import { appFolders } from "@/features/business/data/apps";
@@ -93,7 +94,7 @@ const Index = () => {
               animate={{ opacity: 1 }}
               exit={{ x: "-100%", width: 0 }}
               transition={springTransition}
-              className="relative h-full cursor-pointer overflow-hidden"
+              className="relative h-full flex-1 basis-0 min-w-0 cursor-pointer overflow-hidden"
               onClick={() => navigate(CONSUMER_BASE_PATH, { state: { from: "landing" } })}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-consumer-coral/20 via-consumer-bg to-consumer-cyan/15" />
@@ -105,15 +106,15 @@ const Index = () => {
                   initial="hidden"
                   animate="visible"
                   variants={titleFlyLeft}
-                  className="text-center pt-12 pb-3 shrink-0 px-3"
+                  className="text-center pt-10 pb-3 shrink-0 px-3"
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-consumer-coral/20 flex items-center justify-center mx-auto mb-3">
-                    <Sparkles className="w-6 h-6 text-consumer-coral" />
+                  <div className="w-11 h-11 rounded-2xl bg-consumer-coral/20 flex items-center justify-center mx-auto mb-2.5">
+                    <Sparkles className="w-5.5 h-5.5 text-consumer-coral" />
                   </div>
-                  <h2 className="font-playful text-5xl font-extrabold text-consumer-text leading-none">
+                  <h2 className="font-playful text-[2.6rem] font-extrabold text-consumer-text leading-none">
                     Bạn khách
                   </h2>
-                  <p className="text-consumer-text-muted text-base mt-1.5">
+                  <p className="text-consumer-text-muted text-[0.94rem] mt-1.25">
                     Giải trí · Học tập · Kết nối
                   </p>
                 </motion.div>
@@ -128,19 +129,18 @@ const Index = () => {
                         initial="hidden"
                         animate="visible"
                         variants={consumerCardSlide}
-                        className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-md"
+                        className="relative w-full"
                       >
-                        <img src={app.imageUrl} alt={app.name} className="w-full h-full object-cover" loading="lazy" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-consumer-text/85 via-consumer-text/30 to-transparent" />
-                        <div className="absolute bottom-0 left-0 right-0 p-2.5">
-                          <h3 className="font-playful text-lg font-bold text-consumer-surface leading-tight">{app.name}</h3>
-                          <p className="text-consumer-surface/80 text-sm mt-1 line-clamp-2 leading-relaxed">{app.description}</p>
-                          <div className="flex gap-1 mt-1">
-                            {app.tags.map((t) => (
-                              <span key={t} className="text-xs font-semibold px-2 py-1 rounded-full bg-consumer-coral/25 text-consumer-surface/90">{t}</span>
-                            ))}
-                          </div>
-                        </div>
+                        <ConsumerAppCard
+                          title={app.name}
+                          description={app.description}
+                          tags={app.tags}
+                          plays={0}
+                          favorites={0}
+                          imageUrl={app.imageUrl}
+                          url="#"
+                          statusLabel={app.status}
+                        />
                       </motion.div>
                     ))}
                   </div>
@@ -175,7 +175,7 @@ const Index = () => {
               animate={{ opacity: 1 }}
               exit={{ x: "100%", width: 0 }}
               transition={springTransition}
-              className="relative h-full cursor-pointer overflow-hidden"
+              className="relative h-full flex-1 basis-0 min-w-0 cursor-pointer overflow-hidden"
               onClick={() => navigate(BUSINESS_BASE_PATH, { state: { from: "landing" } })}
             >
               <div className="absolute inset-0 bg-business-bg" />
@@ -195,15 +195,15 @@ const Index = () => {
                   initial="hidden"
                   animate="visible"
                   variants={titleFlyRight}
-                  className="text-center pt-12 pb-3 shrink-0 px-3"
+                  className="text-center pt-11 pb-3 shrink-0 px-3"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-business-accent-soft flex items-center justify-center mx-auto mb-3 border border-business-border">
-                    <Briefcase className="w-6 h-6 text-business-accent" />
+                  <div className="w-11 h-11 rounded-xl bg-business-accent-soft flex items-center justify-center mx-auto mb-2.5 border border-business-border">
+                    <Briefcase className="w-5.5 h-5.5 text-business-accent" />
                   </div>
-                  <h2 className="font-business text-5xl font-bold text-business-text leading-none">
+                  <h2 className="font-business text-[2.55rem] font-bold text-business-text leading-none">
                     Bạn quán
                   </h2>
-                  <p className="text-business-text-muted text-base mt-1.5">
+                  <p className="text-business-text-muted text-[0.94rem] mt-1.25">
                     Quản lý · Bán hàng · Tăng trưởng
                   </p>
                 </motion.div>

@@ -8,7 +8,7 @@ describe("Dual Hub landing flow", () => {
     window.history.pushState({}, "", "/");
     render(<App />);
 
-    fireEvent.click(screen.getByAltText("ChatVui"));
+    fireEvent.click(await screen.findByRole("link", { name: /CV-tify/i }));
 
     expect(await screen.findByRole("button", { name: "Bạn quán" })).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Tìm ứng dụng yêu thích...")).toBeInTheDocument();
@@ -19,7 +19,7 @@ describe("Dual Hub landing flow", () => {
     window.history.pushState({}, "", "/");
     render(<App />);
 
-    fireEvent.click(screen.getByAltText("ChatVui"));
+    fireEvent.click(await screen.findByRole("link", { name: /CV-tify/i }));
     fireEvent.click(screen.getByRole("button", { name: "Bạn quán" }));
 
     expect(await screen.findByPlaceholderText("Search tools...")).toBeInTheDocument();
@@ -31,7 +31,7 @@ describe("Dual Hub landing flow", () => {
     window.history.pushState({}, "", "/");
     render(<App />);
 
-    fireEvent.click(screen.getByAltText("ChatVui"));
+    fireEvent.click(await screen.findByRole("link", { name: /CV-tify/i }));
     await screen.findByText("CV-tify");
 
     const consumerGrid = within(screen.getByTestId("consumer-app-grid"));
